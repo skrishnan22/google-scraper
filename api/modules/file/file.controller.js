@@ -1,5 +1,6 @@
 import fileService from './file.service.js';
 import * as fs from 'fs';
+import prisma from '../../utils/prismaClient.js'
 export default class FileController {
   constructor() {}
   /**
@@ -11,7 +12,12 @@ export default class FileController {
     try {
       fileService.validateFileUpload(req.file);
       const csvData = await fileService.parseCSVFile(req.file.path);
-      console.log(csvData);
+
+      const keywordRecords = csvData.map( keyword => {
+        return {name: keyword}
+      });
+
+      await prisma.keyword.createMany({data:keywordRecords});
       fs.unlinkSync(req?.file?.path);
       return res.json({ success: true });
     } catch (err) {

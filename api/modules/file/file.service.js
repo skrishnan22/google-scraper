@@ -26,14 +26,17 @@ class FileService {
     }
     const csvRows = [];
     return new Promise((resolve, reject) => {
-      parseFile(filePath)
+      parseFile(filePath, { headers: true })
         .on('error', error => {
           console.error(error);
           reject(err);
         })
-        .on('data', row => csvRows.push(row))
-        .on('end', rowCount => {
-          console.log(`Parsed ${rowCount} rows`);
+        .on('data', row => {
+          if(row?.Keyword){
+            csvRows.push(row.Keyword?.trim());
+          }
+        })
+        .on('end', _ => {
           resolve(csvRows);
         });
     });

@@ -13,6 +13,8 @@ model User {
   email     String   @unique
   name      String?
   password  String
+  keywords  Keyword[]
+
 }
 
 model Keyword {
@@ -20,5 +22,8 @@ model Keyword {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String
+  userId    Int       @default(1)
+  user     User   @relation(fields: [userId], references: [id])
+
 }
 
