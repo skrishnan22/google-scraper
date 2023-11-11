@@ -14,7 +14,7 @@ model User {
   name      String?
   password  String
   keywords  Keyword[]
-
+  files     FileUpload[]
 }
 
 model Keyword {
@@ -25,7 +25,17 @@ model Keyword {
   scrapeStatus  Status      @default(PENDING)
   userId        Int         @default(1)
   user          User        @relation(fields: [userId], references: [id])
+  fileId        Int 
+  file          FileUpload  @relation(fields: [fileId], references: [id])
+}
 
+model FileUpload {
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  userId        Int         @default(1)
+  user          User        @relation(fields: [userId], references: [id])
+  keywords      Keyword[]
 }
 
 enum Status {
