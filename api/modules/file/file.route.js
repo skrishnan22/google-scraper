@@ -7,3 +7,4 @@ export const path = 'file';
 const fileController = new FileController();
 
 router.post('/upload', upload.single('keywordsFile'), fileController.uploadFile.bind(this));
+router.get('/upload-status/:uploadId', fileController.getUploadStatus.bind(this));
