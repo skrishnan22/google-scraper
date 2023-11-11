@@ -18,12 +18,18 @@ model User {
 }
 
 model Keyword {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-  userId    Int       @default(1)
-  user     User   @relation(fields: [userId], references: [id])
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  name          String
+  scrapeStatus  Status      @default(PENDING)
+  userId        Int         @default(1)
+  user          User        @relation(fields: [userId], references: [id])
 
 }
 
+enum Status {
+  PENDING
+  SUCCESS
+  ERROR
+}
