@@ -1,0 +1,21 @@
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+  <div class="toast-container position-absolute top-0 end-0">
+    <ngb-toast
+      *ngFor="let toast of toastService.toasts"
+      [class]="toast.className"
+      [header]="toast.header"
+      [autohide]="true"
+      [delay]="toast.delay"
+      (hidden)="toastService.remove(toast)">
+      {{ toast.body }}
+    </ngb-toast>
+  </div>
+</div>
+
+<app-nav-bar></app-nav-bar>
+<div class="container mx-auto mt-10">
+  <app-file-upload></app-file-upload>
+</div>
+
+
+
