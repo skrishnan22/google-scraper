@@ -1,0 +1,45 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String?
+  password  String
+  keywords  Keyword[]
+  files     FileUpload[]
+}
+
+model Keyword {
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  name          String
+  scrapeStatus  Status      @default(PENDING)
+  userId        Int         @default(1)
+  user          User        @relation(fields: [userId], references: [id])
+  fileId        Int 
+  file          FileUpload  @relation(fields: [fileId], references: [id])
+}
+
+model FileUpload {
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  userId        Int         @default(1)
+  user          User        @relation(fields: [userId], references: [id])
+  keywords      Keyword[]
+}
+
+enum Status {
+  PENDING
+  SUCCESS
+  ERROR
+}
