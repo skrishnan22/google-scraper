@@ -8,7 +8,7 @@ import authMiddleware from './middlewares/auth.js';
 
 const app = new express();
 import('dotenv/config');
-
+const port = process.env.PORT || 5001;
 (async () => {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
@@ -19,5 +19,5 @@ import('dotenv/config');
   app.use(`/${fileRouter.path}`, fileRouter.router);
   app.use(`/${keywordRouter.path}`, keywordRouter.router);
 
-  app.listen(5001, () => console.log('app started'));
+  app.listen(port, () => console.log(`app started on port ${port}`));
 })();
