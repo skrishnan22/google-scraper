@@ -8,10 +8,23 @@ export default class UserController {
    * @param {*} req
    * @param {*} res
    */
-  async createUser(req, res, next) {
+  async create(req, res, next) {
     try {
-      const user = await userService.createUser(req.body);
+      const user = await userService.create(req.body);
       delete user.password;
+      return res.json({ success: true, data: { user } });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async login(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      if (!email || !password) {
+        throw new Error(`Please enter email and password to login`);
+      }
+      const user = await userService.login(email, password);
       return res.json({ success: true, data: { user } });
     } catch (err) {
       next(err);

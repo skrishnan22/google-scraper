@@ -24,7 +24,7 @@ class UserService {
     }
   }
 
-  async createUser(userDetails) {
+  async create(userDetails) {
     this.validateCreateUser(userDetails);
     const existingUser = await prisma.user.findFirst({
       where: {
@@ -43,6 +43,26 @@ class UserService {
   async generatePasswordHash(password) {
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     return hashedPassword;
+  }
+
+  async login(email, password) {
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email
+      }
+    });
+
+    if (!existingUser) {
+      throw new Error(`User with email ${email} does not exist`);
+    }
+
+    const passwordFromDB = existingUser.password;
+    const isCorrectPassword = await bcrypt.compare(password, passwordFromDB);
+    if (!isCorrectPassword) {
+      throw new Error('Incorrect password');
+    }
+    delete existingUser.password;
+    return existingUser;
   }
 }
 
