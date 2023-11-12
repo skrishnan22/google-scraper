@@ -16,6 +16,10 @@ ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium
 
 COPY package*.json ./
 
+RUN npm install
+
+EXPOSE 3000
+
 
 COPY . .
 
