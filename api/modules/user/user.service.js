@@ -1,5 +1,7 @@
-import prisma from '../../utils/prismaClient.js';
 import * as bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import config from 'config';
+import prisma from '../../utils/prismaClient.js';
 
 const SALT_ROUNDS = 10;
 
@@ -63,6 +65,10 @@ class UserService {
     }
     delete existingUser.password;
     return existingUser;
+  }
+
+  getJWTToken(user) {
+    return jwt.sign({ userId: user.id }, config?.jwt?.secret, { expiresIn: '1d' });
   }
 }
 
