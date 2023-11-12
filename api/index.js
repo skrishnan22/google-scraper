@@ -7,6 +7,7 @@ import * as userRouter from './modules/user/user.route.js';
 import authMiddleware from './middlewares/auth.js';
 
 const app = new express();
+import('dotenv/config');
 
 (async () => {
   app.use(express.urlencoded({ extended: true }));

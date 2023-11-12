@@ -1,6 +1,5 @@
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import config from 'config';
 import prisma from '../../utils/prismaClient.js';
 
 const SALT_ROUNDS = 10;
@@ -68,7 +67,7 @@ class UserService {
   }
 
   getJWTToken(user) {
-    return jwt.sign({ userId: user.id }, config?.jwt?.secret, { expiresIn: '1d' });
+    return jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
   }
 }
 

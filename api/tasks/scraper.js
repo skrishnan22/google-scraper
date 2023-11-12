@@ -21,7 +21,10 @@ export default async function job(payload) {
 }
 
 async function scrapeGoogle(keywords) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox'],
+    headless: true,
+  });
   const page = await browser.newPage();
 
   for (const keyword of keywords) {
