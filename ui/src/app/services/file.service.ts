@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, interval, switchMap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
 
-  private API_URL = 'http://localhost:5001';
+  private API_URL = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) { 
 
