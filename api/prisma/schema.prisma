@@ -28,7 +28,7 @@ model Keyword {
   fileId        Int 
   file          FileUpload  @relation(fields: [fileId], references: [id])
   linkCount     Int         @default(0)
-  resultCount   Int         @default(0)
+  resultCount   BigInt      @default(0)
   adwordCount   Int         @default(0)
   htmlContent   String      @default("")
 }

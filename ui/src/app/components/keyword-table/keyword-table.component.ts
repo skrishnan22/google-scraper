@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import * as numeral from 'numeral';
+
 import { KeywordService } from 'src/app/services/keyword.service';
 
 @Component({
@@ -20,6 +22,10 @@ export class KeywordTableComponent implements OnInit {
   loadKeywords(page: number) {
     this.keywordService.getKeywords(page, this.pageSize).subscribe(data => {
       this.keywords = data?.data?.keywords;
+      this.keywords = this.keywords.map((keyword: any) => {
+        keyword.resultCount = numeral(keyword.resultCount).format('0.00 a');
+        return keyword;
+      });
       this.totalItems = data?.data?.totalCount;
     });
   }

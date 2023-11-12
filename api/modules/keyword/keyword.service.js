@@ -9,7 +9,7 @@ class KeywordService {
   async fetchKeywords({ page = 1, pageSize = 10, userId }) {
     const skip = (page - 1) * pageSize;
 
-    return prisma.keyword.findMany({
+    const keywords = await prisma.keyword.findMany({
       skip,
       take: pageSize,
       where: {
@@ -20,6 +20,14 @@ class KeywordService {
         createdAt: 'desc'
       }
     });
+
+    const serializedResult = keywords.map(row => {
+      return {
+        ...row,
+        resultCount: row.resultCount.toString(), // Convert BigInt to string
+      };
+    });
+    return serializedResult;
   }
 
   /**
