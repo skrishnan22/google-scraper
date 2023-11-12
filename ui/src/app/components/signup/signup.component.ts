@@ -30,6 +30,9 @@ export class SignupComponent implements OnInit {
     if (this.signupForm.valid) {
       this.userService.signUp(this.signupForm.value).subscribe({
         next: response => {
+          if (response?.data?.user?.token) {
+            localStorage.setItem('token', response.data.user.token);
+          }
           this.router.navigate(['/home']);
         },
         error: error => {

@@ -14,7 +14,9 @@ import { LoginComponent } from './components/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { AuthInterceptor } from './auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthResponseInterceptor } from './auth-response.interceptor';
 const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
@@ -34,14 +36,18 @@ const routes: Routes = [
     HomeComponent
   ],
   imports: [
-    BrowserModule, 
-    HttpClientModule, 
-    NgbModule, 
-    NgbToastModule, 
+    BrowserModule,
+    HttpClientModule,
+    NgbModule,
+    NgbToastModule,
     RouterModule.forRoot(routes),
     ReactiveFormsModule
   ],
-  providers: [NgbActiveModal],
+  providers: [
+    NgbActiveModal,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthResponseInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
