@@ -13,7 +13,7 @@ class KeywordService {
       skip,
       take: pageSize,
       where: {
-        userId: 1,
+        userId,
         scrapeStatus: { not: 'PENDING' }
       },
       orderBy: {
@@ -30,7 +30,7 @@ class KeywordService {
   async getTotalCount({ userId }) {
     return prisma.keyword.count({
       where: {
-        userId: 1,
+        userId,
         scrapeStatus: { not: 'PENDING' }
       }
     });

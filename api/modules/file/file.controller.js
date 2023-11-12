@@ -14,13 +14,13 @@ export default class FileController {
       fileService.validateFileUpload(req.file);
       const csvData = await fileService.parseCSVFile(req.file.path);
 
-      const fileUpload = await prisma.fileUpload.create({ data: { userId: 1 } });
+      const fileUpload = await prisma.fileUpload.create({ data: { userId: req.user.id } });
       console.log(fileUpload);
       const keywordRecords = csvData.map(keyword => {
-        return { name: keyword, userId: 1, fileId: fileUpload.id };
+        return { name: keyword, userId: req.user.id, fileId: fileUpload.id };
       });
       await prisma.keyword.createMany({ data: keywordRecords });
-      await workerUtils.addJob('scraper', { fileId: fileUpload.id, userId: 1 });
+      await workerUtils.addJob('scraper', { fileId: fileUpload.id, userId: req.user.id });
 
       return res.json({ success: true, uploadId: fileUpload.id, totalCount: keywordRecords.length });
     } catch (err) {
@@ -41,7 +41,7 @@ export default class FileController {
       const uploadId = parseInt(req.params.uploadId);
       const completedKeywords = await prisma.keyword.count({
         where: {
-          userId: 1,
+          userId: req.user.id,
           fileId: uploadId,
           scrapeStatus: { not: 'PENDING' }
         }

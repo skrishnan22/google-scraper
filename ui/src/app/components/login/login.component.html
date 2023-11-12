@@ -1,0 +1,31 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card" style="width: 20rem">
+    <div class="card-body">
+      <div class="text-center mb-4">
+        <img src="path-to-logo.png" alt="Logo" class="mb-3" style="width: 60px" />
+        <h5 class="card-title">Sign In</h5>
+      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com" />
+          <div *ngIf="f.email.touched && f.email.errors" class="text-danger">
+            <div *ngIf="f.email.errors.required">Email is required.</div>
+            <div *ngIf="f.email.errors.email">Please enter a valid email.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password" />
+          <div *ngIf="f.password.touched && f.password.errors?.required" class="text-danger">Password is required.</div>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </div>
+      </form>
+      <div class="mt-3 text-center">
+        <span>Don't have an account? <a href="/signup">Sign Up</a></span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card" style="width: 20rem">
+    <div class="card-body">
+      <div class="text-center mb-4">
+        <img src="path-to-logo.png" alt="Logo" class="mb-3" style="width: 60px" />
+
+        <h5 class="card-title">Sign Up</h5>
+      </div>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="John Doe" formControlName="name" />
+          <div *ngIf="form['name'].touched && form['name'].errors?.required" class="text-danger">Name is required.</div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="email" />
+          <div *ngIf="form['email'].touched && form['email'].errors?.required" class="text-danger">
+            Email is required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password" />
+          <div *ngIf="form['password'].touched && form['password'].errors?.required" class="text-danger">
+            Password is required.
+          </div>
+          <div *ngIf="form['password'].touched && form['password'].errors?.minlength" class="text-danger">
+            Password should be atleast 6 characters
+          </div>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </div>
+      </form>
+      <div class="mt-3 text-center">
+        <span>Already have an account? <a href="/login">Sign In</a></span>
+      </div>
+    </div>
+  </div>
+</div>

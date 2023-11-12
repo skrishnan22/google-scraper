@@ -14,10 +14,10 @@ export default class KeywordController {
       const keywords = await keywordService.fetchKeywords({
         page: parseInt(page),
         pageSize: parseInt(pageSize),
-        userId: 1
+        userId: req.user.id
       });
 
-      const totalCount = await keywordService.getTotalCount({ userId: 1 });
+      const totalCount = await keywordService.getTotalCount({ userId: req.user.id });
       return res.json({ success: true, data: { keywords, totalCount } });
     } catch (err) {
       next(err);
