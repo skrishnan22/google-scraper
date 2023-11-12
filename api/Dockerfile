@@ -16,12 +16,11 @@ ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium
 
 COPY package*.json ./
 
+EXPOSE 3000
+
 RUN npm install
 
 RUN npx prisma generate
-
-EXPOSE 3000
-
 
 COPY . .
 
