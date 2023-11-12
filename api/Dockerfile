@@ -24,6 +24,8 @@ RUN npm install
 
 RUN npx prisma generate
 
+RUN npx prisma migrate deploy
+
 COPY . .
 
 CMD ["node", "index.js"]
