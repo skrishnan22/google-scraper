@@ -32,6 +32,7 @@ export class SignupComponent implements OnInit {
         next: response => {
           if (response?.data?.user?.token) {
             localStorage.setItem('token', response.data.user.token);
+            localStorage.setItem('userName', response.data.user.name);
           }
           this.router.navigate(['/home']);
         },
