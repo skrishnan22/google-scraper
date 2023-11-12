@@ -7,6 +7,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { ProgressModalComponent } from './components/progress-modal/progress-modal.component';
 import { NgbModule, NgbActiveModal, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { KeywordTableComponent } from './components/keyword-table/keyword-table.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { NgbModule, NgbActiveModal, NgbToastModule } from '@ng-bootstrap/ng-boot
     NavBarComponent,
     FileUploadComponent,
     ProgressModalComponent,
+    KeywordTableComponent
   ],
   imports: [
     BrowserModule,
