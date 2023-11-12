@@ -1,4 +1,4 @@
-import config from 'config';
+
 import jwt from 'jsonwebtoken';
 import prisma from '../utils/prismaClient.js';
 
@@ -15,7 +15,7 @@ const authBypassRoutes = ['/health', '/user/sign-up', '/user/login'];
  * @returns 
  */
 const verifyToken = async (req, res, next) => {
-  const jwtSecret = config?.jwt?.secret;
+  const jwtSecret = process.env.JWT_SECRET
   const token = req.headers['authorization'];
 
   //Routes like signup and login should not be authenticated anyways
