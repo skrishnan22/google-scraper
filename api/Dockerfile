@@ -16,6 +16,8 @@ ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium
 
 COPY package*.json ./
 
+COPY prisma ./prisma
+
 EXPOSE 3000
 
 RUN npm install
