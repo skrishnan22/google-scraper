@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProgressModalComponent } from '../progress-modal/progress-modal.component';
 import { ToastService } from '../../services/toast.service';
 import { ToastComponent } from '../toast/toast.component';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
@@ -18,8 +19,12 @@ export class FileUploadComponent implements OnDestroy {
   totalProgress = 0;
   fileUploadId = null;
   private modalRef: any;
-  private pollingSubscription !: Subscription;
-  constructor(private fileService: FileService, private modalService: NgbModal, private toastService: ToastService) {}
+  private pollingSubscription!: Subscription;
+  constructor(private fileService: FileService, 
+    private modalService: NgbModal, 
+    private toastService: ToastService,
+    private router: Router,
+    private route: ActivatedRoute) {}
 
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -42,7 +47,7 @@ export class FileUploadComponent implements OnDestroy {
           this.pollUploadStatus();
         },
         error: error => {
-          this.toastService.showError('Error occurred while uploading the file ', 10000 )
+          this.toastService.showError('Error occurred while uploading the file ', 10000);
         }
       });
     }
@@ -85,8 +90,11 @@ export class FileUploadComponent implements OnDestroy {
     if (this.modalRef) {
       this.modalRef.close();
     }
-    this.toastService.showSuccess('Keyword upload processed successfully')
-  
+    this.toastService.showSuccess('Keyword upload processed successfully');
+
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['./'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {
