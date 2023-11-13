@@ -5,6 +5,7 @@ import * as fileRouter from './modules/file/file.route.js';
 import * as keywordRouter from './modules/keyword/keyword.route.js';
 import * as userRouter from './modules/user/user.route.js';
 import authMiddleware from './middlewares/auth.js';
+import errorMiddleware from './middlewares/error.js';
 
 const app = new express();
 import('dotenv/config');
@@ -18,7 +19,7 @@ const port = process.env.PORT || 5001;
   app.use(`/${userRouter.path}`, userRouter.router);
   app.use(`/${fileRouter.path}`, fileRouter.router);
   app.use(`/${keywordRouter.path}`, keywordRouter.router);
-
+  app.use(errorMiddleware);
   app.listen(port, () => console.log(`app started on port ${port}`));
 })();
 
