@@ -11,11 +11,11 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  signUp(userDetails: { name: String; password: String; email: String }): Observable<any> {
+  signUp(userDetails: { name: string; password: string; email: string }): Observable<any> {
     return this.http.post(`${this.API_URL}/user/sign-up`, userDetails);
   }
 
-  login(loginDetails: { email: String; password: String }): Observable<any> {
+  login(loginDetails: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.API_URL}/user/login`, loginDetails);
   }
 }

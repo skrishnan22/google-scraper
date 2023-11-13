@@ -36,7 +36,7 @@ class FileService {
             csvRows.push(row.Keyword?.trim());
           }
         })
-        .on('end', _ => {
+        .on('end', () => {
           resolve(csvRows);
         });
     });

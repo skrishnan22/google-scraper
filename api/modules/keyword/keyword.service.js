@@ -15,7 +15,7 @@ class KeywordService {
       where: {
         userId,
         scrapeStatus: { not: 'PENDING' },
-        ...(searchText && {name: {contains: searchText}})
+        ...(searchText && { name: { contains: searchText, mode: 'insensitive' } })
       },
       orderBy: {
         createdAt: 'desc'
@@ -25,7 +25,7 @@ class KeywordService {
     const serializedResult = keywords.map(row => {
       return {
         ...row,
-        resultCount: row.resultCount.toString(), // Convert BigInt to string
+        resultCount: row.resultCount.toString() // Convert BigInt to string
       };
     });
     return serializedResult;
@@ -41,8 +41,7 @@ class KeywordService {
       where: {
         userId,
         scrapeStatus: { not: 'PENDING' },
-        ...(searchText && {name: {contains: searchText}})
-
+        ...(searchText && { name: { contains: searchText } })
       }
     });
   }
