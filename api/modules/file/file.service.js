@@ -32,7 +32,7 @@ class FileService {
           reject(error);
         })
         .on('data', row => {
-          if(row?.Keyword){
+          if (row?.Keyword) {
             csvRows.push(row.Keyword?.trim());
           }
         })
@@ -40,6 +40,20 @@ class FileService {
           resolve(csvRows);
         });
     });
+  }
+
+  async extractKeywordsFromCSV({ filePath, userId, fileId }) {
+    const csvRows = await this.parseCSVFile(filePath);
+    if (csvRows.length > 100) {
+      throw new Error('Uploaded file has more than 100 keywords');
+    }
+    const uniqueKeywords = [...new Set(csvRows)];
+
+    const keywordRecords = uniqueKeywords.map(keyword => {
+      return { name: keyword, userId, fileId };
+    });
+
+    return keywordRecords;
   }
 }
 

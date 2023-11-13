@@ -18,7 +18,7 @@ describe('Scraper - extractDataFromPage', function () {
 
   describe('Custom Simple Html', function () {
     it('Should parse correct data from html', async function () {
-      const htmlFilePath = path.join(___dirname, 'fixtures', 'custom.html');
+      const htmlFilePath = path.join(___dirname, 'fixtures', 'html', 'custom.html');
       const htmlContent = fs.readFileSync(htmlFilePath, 'utf8');
       await page.setContent(htmlContent);
 
@@ -32,7 +32,7 @@ describe('Scraper - extractDataFromPage', function () {
 
   describe('Custom Html with empty links', function () {
     it('Should parse correct data from html', async function () {
-      const htmlFilePath = path.join(___dirname, 'fixtures', 'empty-links.html');
+      const htmlFilePath = path.join(___dirname, 'fixtures', 'html', 'empty-links.html');
       const htmlContent = fs.readFileSync(htmlFilePath, 'utf8');
       await page.setContent(htmlContent);
 
@@ -46,7 +46,7 @@ describe('Scraper - extractDataFromPage', function () {
 
   describe('Google HTML with no adword container', function () {
     it('Should parse correct data from html', async function () {
-      const htmlFilePath = path.join(___dirname, 'fixtures', 'sample-google.html');
+      const htmlFilePath = path.join(___dirname, 'fixtures', 'html', 'sample-google.html');
       const htmlContent = fs.readFileSync(htmlFilePath, 'utf8');
       await page.setContent(htmlContent);
 
@@ -60,7 +60,7 @@ describe('Scraper - extractDataFromPage', function () {
 
   describe('Google HTML with Adwords', function () {
     it('Should parse correct data from html', async function () {
-      const htmlFilePath = path.join(___dirname, 'fixtures', 'adword-google.html');
+      const htmlFilePath = path.join(___dirname, 'fixtures', 'html', 'adword-google.html');
       const htmlContent = fs.readFileSync(htmlFilePath, 'utf8');
       await page.setContent(htmlContent);
 
@@ -91,7 +91,7 @@ describe('Scraper - extractDataFromPage', function () {
   });
 
   after(async function () {
-    // Restore stubs
+
     await browser.close();
   });
 });

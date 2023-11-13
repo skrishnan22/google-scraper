@@ -12,18 +12,16 @@ const authBypassRoutes = ['/health', '/user/sign-up', '/user/login'];
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
- * @returns 
  */
 const verifyToken = async (req, res, next) => {
   const jwtSecret = process.env.JWT_SECRET
   const token = req.headers['authorization'];
-  console.log('req path', req.path);
   //Routes like signup and login should not be authenticated anyways
   if (authBypassRoutes.includes(req.path)) {
     return next();
   }
   if (!token) {
-    return res.status(403).send('A token is required for authentication');
+    return res.status(401).send('A token is required for authentication');
   }
 
   try {
@@ -41,7 +39,6 @@ const verifyToken = async (req, res, next) => {
     }
     req.user = existingUser;
   } catch (err) {
-    console.log(err);
     return res.status(401).send('Invalid Token');
   }
   return next();

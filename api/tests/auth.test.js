@@ -8,7 +8,6 @@ describe('Auth Middleware', function () {
   let testUser, token, mockReq, mockRes, nextSpy;
 
   before(async function () {
-    // Seed necessary test user data into the testing database
     testUser = await prisma.user.create({
       data: {
         name: 'John Doe',
