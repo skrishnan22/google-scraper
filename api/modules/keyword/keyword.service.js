@@ -19,7 +19,17 @@ class KeywordService {
       },
       orderBy: {
         createdAt: 'desc'
-      }
+      },
+      select: {
+        id: true,
+        createdAt: true,
+        name: true,
+        userId: true,
+        linkCount: true,
+        resultCount: true,
+        adwordCount: true
+      },
+    
     });
 
     const serializedResult = keywords.map(row => {
