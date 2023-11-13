@@ -10,7 +10,7 @@
           <th scope="col">Keyword</th>
           <th scope="col">Total Search Results</th>
           <th scope="col">Links Count</th>
-          <th scope="col">Uploaded At</th>
+          <th scope="col">Adword Count</th>
         </tr>
       </thead>
       <tbody>
@@ -18,7 +18,7 @@
           <td>{{ keyword.name }}</td>
           <td>{{ keyword.resultCount || 0 }}</td>
           <td>{{ keyword.linkCount || 0 }}</td>
-          <td>{{ keyword.uploadedAt | date }}</td>
+          <td>{{ keyword.adwordCount || 0 }}</td>
         </tr>
       </tbody>
     </table>

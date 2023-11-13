@@ -29,7 +29,7 @@ class FileService {
       parseFile(filePath, { headers: true })
         .on('error', error => {
           console.error(error);
-          reject(err);
+          reject(error);
         })
         .on('data', row => {
           if(row?.Keyword){

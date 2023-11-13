@@ -48,7 +48,8 @@ async function scrapeGoogle(keywords) {
         scrapeStatus: 'SUCCESS',
         htmlContent,
         linkCount: extractedData.linkCount,
-        resultCount: extractedData.resultCount
+        resultCount: extractedData.resultCount,
+        adwordCount: extractedData.adwordCount
       }
     });
     await randomizeUserActions(page);
@@ -78,7 +79,6 @@ async function extractDataFromPage(page) {
     const statsText = document?.querySelector('#result-stats');
     let resultCount = 0;
     if (statsText?.innerText) {
-      console.log({statsText})
       const regex = /About\s+([\d,]+)\s+results/;
       const match = statsText.innerText.match(regex);
       resultCount = match && match[1].replace(/,/g, '');
@@ -88,15 +88,23 @@ async function extractDataFromPage(page) {
     const validLinks = anchors.filter(
       a => a?.getAttribute('href') !== '#' && !a.getAttribute('href').startsWith('javascript:')
     )?.length;
+    let sponsoredAdsCount = 0;
+
+    const adsContainer = document.querySelector('div#tads[aria-label="Ads"]');
+    if (adsContainer) {
+      const ads = adsContainer?.querySelectorAll('div[data-text-ad]');
+
+      ads.forEach(ad => {
+        const isSponsored = ad?.querySelector('span')?.textContent.includes('Sponsored');
+        if (isSponsored) sponsoredAdsCount++;
+      });
+    }
 
     return {
       linkCount: validLinks,
-      resultCount: parseInt(resultCount)
+      resultCount: parseInt(resultCount),
+      adwordCount: sponsoredAdsCount
     };
   });
-  // if(!data.stats){
-  //   const content = await page.content()
-  //   console.log(content)
-  // }
   return data;
 }
