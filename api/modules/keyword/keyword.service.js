@@ -6,7 +6,7 @@ class KeywordService {
    * @param {*} params
    * @returns
    */
-  async fetchKeywords({ page = 1, pageSize = 10, userId }) {
+  async fetchKeywords({ page = 1, pageSize = 10, userId, searchText }) {
     const skip = (page - 1) * pageSize;
 
     const keywords = await prisma.keyword.findMany({
@@ -14,7 +14,8 @@ class KeywordService {
       take: pageSize,
       where: {
         userId,
-        scrapeStatus: { not: 'PENDING' }
+        scrapeStatus: { not: 'PENDING' },
+        ...(searchText && {name: {contains: searchText}})
       },
       orderBy: {
         createdAt: 'desc'
@@ -35,11 +36,13 @@ class KeywordService {
    * @param {*} params
    * @returns
    */
-  async getTotalCount({ userId }) {
+  async getTotalCount({ userId, searchText }) {
     return prisma.keyword.count({
       where: {
         userId,
-        scrapeStatus: { not: 'PENDING' }
+        scrapeStatus: { not: 'PENDING' },
+        ...(searchText && {name: {contains: searchText}})
+
       }
     });
   }

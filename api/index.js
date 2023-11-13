@@ -21,3 +21,7 @@ const port = process.env.PORT || 5001;
 
   app.listen(port, () => console.log(`app started on port ${port}`));
 })();
+
+process.on('unhandledRejection', err => {
+  logger.error({ description: 'Unhandled rejection', err });
+});
