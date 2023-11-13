@@ -17,7 +17,7 @@ const authBypassRoutes = ['/health', '/user/sign-up', '/user/login'];
 const verifyToken = async (req, res, next) => {
   const jwtSecret = process.env.JWT_SECRET
   const token = req.headers['authorization'];
-
+  console.log('req path', req.path);
   //Routes like signup and login should not be authenticated anyways
   if (authBypassRoutes.includes(req.path)) {
     return next();

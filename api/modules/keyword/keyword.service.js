@@ -6,20 +6,29 @@ class KeywordService {
    * @param {*} params
    * @returns
    */
-  async fetchKeywords({ page = 1, pageSize = 10, userId }) {
+  async fetchKeywords({ page = 1, pageSize = 10, userId, searchText }) {
     const skip = (page - 1) * pageSize;
 
-    return prisma.keyword.findMany({
+    const keywords = await prisma.keyword.findMany({
       skip,
       take: pageSize,
       where: {
         userId,
-        scrapeStatus: { not: 'PENDING' }
+        scrapeStatus: { not: 'PENDING' },
+        ...(searchText && {name: {contains: searchText}})
       },
       orderBy: {
         createdAt: 'desc'
       }
     });
+
+    const serializedResult = keywords.map(row => {
+      return {
+        ...row,
+        resultCount: row.resultCount.toString(), // Convert BigInt to string
+      };
+    });
+    return serializedResult;
   }
 
   /**
@@ -27,11 +36,13 @@ class KeywordService {
    * @param {*} params
    * @returns
    */
-  async getTotalCount({ userId }) {
+  async getTotalCount({ userId, searchText }) {
     return prisma.keyword.count({
       where: {
         userId,
-        scrapeStatus: { not: 'PENDING' }
+        scrapeStatus: { not: 'PENDING' },
+        ...(searchText && {name: {contains: searchText}})
+
       }
     });
   }

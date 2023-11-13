@@ -1,4 +1,8 @@
 <div class="container mt-3">
+  <div class="mb-3 col-md-6">
+    <input type="text" class="form-control" placeholder="Search keywords..." (input)="searchKeywords($event)" />
+  </div>
+
   <div *ngIf="keywords.length; else emptyState">
     <table class="table table-striped">
       <thead>
@@ -6,15 +10,15 @@
           <th scope="col">Keyword</th>
           <th scope="col">Total Search Results</th>
           <th scope="col">Links Count</th>
-          <th scope="col">Uploaded At</th>
+          <th scope="col">Adword Count</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let keyword of keywords">
           <td>{{ keyword.name }}</td>
-          <td>{{ keyword.totalSearchResults }}</td>
-          <td>{{ keyword.linksCount }}</td>
-          <td>{{ keyword.uploadedAt | date }}</td>
+          <td>{{ keyword.resultCount || 0 }}</td>
+          <td>{{ keyword.linkCount || 0 }}</td>
+          <td>{{ keyword.adwordCount || 0 }}</td>
         </tr>
       </tbody>
     </table>
