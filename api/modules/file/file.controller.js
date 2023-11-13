@@ -12,13 +12,15 @@ export default class FileController {
   async uploadFile(req, res, next) {
     try {
       fileService.validateFileUpload(req.file);
-      const csvData = await fileService.parseCSVFile(req.file.path);
 
       const fileUpload = await prisma.fileUpload.create({ data: { userId: req.user.id } });
-      console.log(fileUpload);
-      const keywordRecords = csvData.map(keyword => {
-        return { name: keyword, userId: req.user.id, fileId: fileUpload.id };
+
+      const keywordRecords = await fileService.extractKeywordsFromCSV({
+        filePath: req.file.path,
+        userId: req.user.id,
+        fileId: fileUpload.id
       });
+
       await prisma.keyword.createMany({ data: keywordRecords });
       await workerUtils.addJob('scraper', { fileId: fileUpload.id, userId: req.user.id });
 
