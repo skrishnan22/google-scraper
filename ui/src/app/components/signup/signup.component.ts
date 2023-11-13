@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   signupForm!: FormGroup;
+  private subscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -28,7 +30,7 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if (this.signupForm.valid) {
-      this.userService.signUp(this.signupForm.value).subscribe({
+      const signupSubscription = this.userService.signUp(this.signupForm.value).subscribe({
         next: response => {
           if (response?.data?.user?.token) {
             localStorage.setItem('token', response.data.user.token);
@@ -40,6 +42,7 @@ export class SignupComponent implements OnInit {
           this.toastService.showError(`Error during Sign up ${error?.error?.message}`, 5000);
         }
       });
+      this.subscriptions.push(signupSubscription);
     } else {
       this.markFormFieldsAsTouched();
     }
@@ -53,5 +56,9 @@ export class SignupComponent implements OnInit {
       const control = this.signupForm.get(field);
       control?.markAsTouched({ onlySelf: true });
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

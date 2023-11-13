@@ -13,34 +13,40 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class FileUploadComponent implements OnDestroy {
   file: File | null = null;
-  fileName: string = '';
   showModal = false;
   currentProgress = 0;
   totalProgress = 0;
   fileUploadId = null;
   private modalRef: any;
   private pollingSubscription!: Subscription;
-  constructor(private fileService: FileService, 
-    private modalService: NgbModal, 
+  private subscriptions: Subscription[] = [];
+
+  constructor(
+    private fileService: FileService,
+    private modalService: NgbModal,
     private toastService: ToastService,
     private router: Router,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute
+  ) {}
 
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement;
+    if (!target || !target.files) {
+      return;
+    }
     const file: File = (target.files as FileList)[0];
+
     if (file && file.type === 'text/csv') {
       this.file = file;
-      this.fileName = file.name;
       this.uploadFile();
     }
+    target.value = '';
   }
 
   uploadFile(): void {
     if (this.file) {
-      this.fileService.uploadFile(this.file).subscribe({
+      const uploadSubscription = this.fileService.uploadFile(this.file).subscribe({
         next: response => {
-          console.log(response);
           this.fileUploadId = response.uploadId || 1;
           this.totalProgress = response.totalCount;
           this.openProgressModal();
@@ -50,6 +56,7 @@ export class FileUploadComponent implements OnDestroy {
           this.toastService.showError(`Error occurred while uploading the file -  ${error?.error?.message}`, 5000);
         }
       });
+      this.subscriptions.push(uploadSubscription);
     }
   }
 
@@ -101,5 +108,6 @@ export class FileUploadComponent implements OnDestroy {
     if (this.pollingSubscription) {
       this.pollingSubscription.unsubscribe();
     }
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.userService.login(this.loginForm.value).subscribe({
+      const loginSubscription = this.userService.login(this.loginForm.value).subscribe({
         next: response => {
           if (response?.data?.user) {
             localStorage.setItem('token', response.data.user.token);
@@ -40,6 +42,7 @@ export class LoginComponent implements OnInit {
           this.toastService.showError(`Login Error - ${error?.error?.message}`, 5000);
         }
       });
+      this.subscriptions.push(loginSubscription);
     } else {
       this.markFormFieldsAsTouched();
     }
@@ -54,5 +57,9 @@ export class LoginComponent implements OnInit {
 
   get f() {
     return this.loginForm.controls;
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

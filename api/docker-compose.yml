@@ -10,6 +10,8 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - JWT_SECRET=${JWT_SECRET}
     command: sh -c "npm install && npx prisma migrate deploy && node index.js"
+    restart: always
+
   
   worker:
     build: .
@@ -19,7 +21,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - JWT_SECRET=${JWT_SECRET}
     command: sh -c "npm install && npx prisma migrate deploy && node tasks/index.js"
-
+    restart: always
 
   db:
     image: postgres
