@@ -16,9 +16,9 @@ describe('extractKeywordsFromCSV Tests', function() {
     const filePath = path.join(__dirname, 'fixtures', 'csv', 'keywords_10.csv');
     const result = await fileService.extractKeywordsFromCSV({ filePath, userId: 1, fileId: 1 });
     const allItemsValid = result.every(item => 
-        item.hasOwnProperty('name') && 
-        item.hasOwnProperty('fileId') && 
-        item.hasOwnProperty('userId') &&
+        item.name && 
+        item.fileId && 
+        item.userId &&
         item.fileId === 1 &&
         item.userId === 1
       );

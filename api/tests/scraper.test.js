@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import sinon from 'sinon';
 import path from 'path';
 import fs from 'fs';
 import puppeteer from 'puppeteer';

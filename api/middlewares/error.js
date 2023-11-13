@@ -1,6 +1,4 @@
-
 export default function errorMiddleware(err, req, res, next) {
-
   if (res.headersSent) {
     return next(err);
   }
@@ -15,4 +13,4 @@ export default function errorMiddleware(err, req, res, next) {
   };
 
   res.status(httpStatusCode).json(errResponse);
-};
+}

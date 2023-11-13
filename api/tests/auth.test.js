@@ -5,7 +5,7 @@ import verifyToken from '../middlewares/auth.js';
 import jwt from 'jsonwebtoken';
 
 describe('Auth Middleware', function () {
-  let testUser, token, mockReq, mockRes, nextSpy;
+  let testUser, mockReq, mockRes, nextSpy;
 
   before(async function () {
     testUser = await prisma.user.create({

@@ -7,6 +7,7 @@ const SALT_ROUNDS = 10;
 class UserService {
   validateCreateUser(userDetails = {}) {
     const emailRegex = new RegExp(
+      // eslint-disable-next-line no-control-regex
       "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
     );
 
