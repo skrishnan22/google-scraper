@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProgressModalComponent } from '../progress-modal/progress-modal.component';
 import { ToastService } from '../../services/toast.service';
-import { ToastComponent } from '../toast/toast.component';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-file-upload',

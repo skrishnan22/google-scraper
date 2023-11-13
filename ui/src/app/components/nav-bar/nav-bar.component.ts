@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
   isCollapsed = true;
-  initial: String = '';
+  initial: string = '';
   constructor(private router: Router) {}
 
   ngOnInit(): void {
