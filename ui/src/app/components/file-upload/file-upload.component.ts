@@ -78,7 +78,7 @@ export class FileUploadComponent implements OnDestroy {
   }
 
   openProgressModal() {
-    this.modalRef = this.modalService.open(ProgressModalComponent, { size: 'sm', centered: true });
+    this.modalRef = this.modalService.open(ProgressModalComponent, { size: 'lg', centered: true });
     this.modalRef.componentInstance.currentProgress = this.currentProgress;
     this.modalRef.componentInstance.totalProgress = this.totalProgress;
   }
