@@ -37,7 +37,7 @@ export class SignupComponent implements OnInit {
           this.router.navigate(['/home']);
         },
         error: error => {
-          this.toastService.showError(`Error during Sign up ${error.message}`, 2500);
+          this.toastService.showError(`Error during Sign up ${error?.error?.message}`, 5000);
         }
       });
     } else {

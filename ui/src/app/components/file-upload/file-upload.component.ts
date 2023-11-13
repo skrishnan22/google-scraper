@@ -47,7 +47,7 @@ export class FileUploadComponent implements OnDestroy {
           this.pollUploadStatus();
         },
         error: error => {
-          this.toastService.showError('Error occurred while uploading the file ', 10000);
+          this.toastService.showError(`Error occurred while uploading the file -  ${error?.error?.message}`, 5000);
         }
       });
     }

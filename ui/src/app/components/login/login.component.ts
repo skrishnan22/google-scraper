@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/home']);
         },
         error: error => {
-          this.toastService.showError('Invalid email and password', 2500);
+          this.toastService.showError(`Login Error - ${error?.error?.message}`, 5000);
         }
       });
     } else {
