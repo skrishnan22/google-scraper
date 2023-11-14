@@ -11,8 +11,12 @@ export class KeywordService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getKeywords(page: number, pageSize: number, searchText:string): Observable<any> {
+  getKeywords(page: number, pageSize: number, searchText: string): Observable<any> {
     const params = { page: page.toString(), pageSize: pageSize.toString(), searchText };
     return this.httpClient.get(`${this.API_URL}/keyword`, { params });
+  }
+
+  getKeywordById(keywordId: string): Observable<any> {
+    return this.httpClient.get(`${this.API_URL}/keyword/${keywordId}`);
   }
 }

@@ -11,6 +11,7 @@
           <th scope="col">Total Search Results</th>
           <th scope="col">Links Count</th>
           <th scope="col">Adword Count</th>
+          <th scope="col">Page HTML</th>
         </tr>
       </thead>
       <tbody>
@@ -19,6 +20,7 @@
           <td>{{ keyword.resultCount || 0 }}</td>
           <td>{{ keyword.linkCount || 0 }}</td>
           <td>{{ keyword.adwordCount || 0 }}</td>
+          <td><button class="btn btn-link" (click)="openHtml(keyword.id)">View HTML</button></td>
         </tr>
       </tbody>
     </table>
