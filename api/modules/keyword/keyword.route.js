@@ -6,3 +6,4 @@ export const path = 'keyword';
 const keywordController = new KeywordController();
 
 router.get('/', keywordController.getPaginatedKeywords.bind(this));
+router.get('/:id', keywordController.getKeywordById.bind(this));

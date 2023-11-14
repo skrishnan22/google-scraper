@@ -24,4 +24,22 @@ export default class KeywordController {
       next(err);
     }
   }
+
+  /** Get single keyword by Id
+   * @param {*} req
+   * @param {*} res
+   */
+  async getKeywordById(req, res, next) {
+    try {
+      const keywordId = req?.params?.id;
+      if (!keywordId) {
+        throw new Error('Keyword id is needed to fetch its details');
+      }
+      const keyword = await keywordService.getKeywordById({ keywordId: parseInt(keywordId), userId: req.user.id });
+
+      return res.json({ success: true, data: { keyword } });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
