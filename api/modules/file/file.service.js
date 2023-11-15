@@ -44,12 +44,14 @@ class FileService {
 
   async extractKeywordsFromCSV({ filePath, userId, fileId }) {
     const csvRows = await this.parseCSVFile(filePath);
-    if (csvRows.length > 100) {
-      throw new Error('Uploaded file has more than 100 keywords');
-    }
     if (!csvRows.length) {
       throw new Error('No keywords found in File. Ensure to have data under a column with header "Keyword"');
     }
+
+    if (csvRows.length > 100) {
+      throw new Error('Uploaded file has more than 100 keywords');
+    }
+
     const uniqueKeywords = [...new Set(csvRows)];
 
     const keywordRecords = uniqueKeywords.map(keyword => {

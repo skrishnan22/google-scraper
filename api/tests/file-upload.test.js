@@ -9,8 +9,6 @@ import fileService from '../modules/file/file.service.js';
 describe('extractKeywordsFromCSV Tests', function () {
   let __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-  beforeEach(function () {});
-
   it('should handle files with less than 100 keywords', async function () {
     const filePath = path.join(__dirname, 'fixtures', 'csv', 'keywords_10.csv');
     const result = await fileService.extractKeywordsFromCSV({ filePath, userId: 1, fileId: 1 });
