@@ -28,8 +28,7 @@ class KeywordService {
         linkCount: true,
         resultCount: true,
         adwordCount: true
-      },
-    
+      }
     });
 
     const serializedResult = keywords.map(row => {
@@ -54,6 +53,18 @@ class KeywordService {
         ...(searchText && { name: { contains: searchText } })
       }
     });
+  }
+
+  async getKeywordById({ keywordId, userId }) {
+    const keyword = await prisma.keyword.findFirst({
+      where: {
+        id: keywordId,
+        userId
+      }
+    });
+
+    keyword.resultCount = keyword.resultCount.toString(); // Convert BigInt to string
+    return keyword;
   }
 }
 

@@ -17,10 +17,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthResponseInterceptor } from './auth-response.interceptor';
+import { ViewHtmlComponent } from './components/view-html/view-html.component';
 const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'view-html/:keywordId', component: ViewHtmlComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
@@ -33,7 +35,8 @@ const routes: Routes = [
     KeywordTableComponent,
     SignupComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    ViewHtmlComponent
   ],
   imports: [
     BrowserModule,

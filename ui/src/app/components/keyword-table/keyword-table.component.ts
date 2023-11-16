@@ -55,4 +55,8 @@ export class KeywordTableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
+  openHtml(keywordId: string) {
+    window.open(`/view-html/${keywordId}`, '_blank');
+  }
 }
